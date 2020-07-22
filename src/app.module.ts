@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { DataBaseConfiguration } from 'config/database.configuration';
 import { Admin } from 'entities/Admin';
@@ -16,10 +15,10 @@ import { AdminController } from './controllers/api/admin.controller';
       database: DataBaseConfiguration.database,
       entities: [Admin]
     }),
-    TypeOrmModule.forFeature([Admin,])
+    TypeOrmModule.forFeature([Admin])
     
   ],
-  controllers: [AppController,AdminController,],
+  controllers: [AdminController],
   providers: [AdminService],
 })
 export class AppModule {}
