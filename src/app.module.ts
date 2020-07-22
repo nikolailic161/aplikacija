@@ -16,10 +16,10 @@ import { AdminController } from './controllers/api/admin.controller';
       database: DataBaseConfiguration.database,
       entities: [Admin]
     }),
-    TypeOrmModule.forFeature([Admin])
+    TypeOrmModule.forFeature([Admin,])
     
   ],
-  controllers: [AppController,AdminController],
-  providers: [AdminService,AdminService],
+  controllers: [AppController,AdminController,],
+  providers: [AdminService],
 })
 export class AppModule {}
