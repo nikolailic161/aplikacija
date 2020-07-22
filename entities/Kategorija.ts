@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Artikl } from "./Artikl";
 
-@Index("fk_kategorija_potkategorija", ["potkategorija"], {})
+@Index("fk_kategorija_potkategorija", ["parent_kategorija"], {})
 @Index("ime", ["ime"], { unique: true })
 @Entity("kategorija", { schema: "auto_delovi" })
 export class Kategorija {
@@ -18,7 +18,7 @@ export class Kategorija {
     name: "kategorija_id",
     unsigned: true,
   })
-  kategorijaId: number;
+  id: number;
 
   @Column("varchar", {
     name: "ime",
@@ -35,7 +35,7 @@ export class Kategorija {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
-  @JoinColumn([{ name: "potkategorija", referencedColumnName: "kategorijaId" }])
+  @JoinColumn([{ name: "parent_kategorija", referencedColumnName: "id" }])
   parent_kategorija: Kategorija;
 
   @OneToMany(() => Kategorija, (kategorija) => kategorija.parent_kategorija)

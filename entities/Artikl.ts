@@ -50,12 +50,11 @@ export class Artikl {
   @Column("int", { name: "garancija", nullable: true, default: () => "'0'" })
   garancija: number | null;
 
-  @ManyToMany(() => Automobil, (automobil) => automobil.artikls)
+  @ManyToMany(type=>Automobil,auto=>auto.artikls)
   @JoinTable({
-    name: "artikl_automobil",
-    joinColumns: [{ name: "artikl", referencedColumnName: "artiklId" }],
-    inverseJoinColumns: [{ name: "automobil", referencedColumnName: "autoId" }],
-    schema: "auto_delovi",
+    name:"artikl_automobil",
+    joinColumn: {name:"artikl", referencedColumnName: "artiklId"},
+    inverseJoinColumn: {name: "automobil", referencedColumnName: "autoId"}
   })
   automobils: Automobil[];
 
@@ -63,7 +62,7 @@ export class Artikl {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
-  @JoinColumn([{ name: "kategorija", referencedColumnName: "kategorijaId" }])
+  @JoinColumn([{ name: "kategorija", referencedColumnName: "id" }])
   kategorija: Kategorija;
 
   @OneToMany(() => KorpaStavka, (korpaStavka) => korpaStavka.artikl)

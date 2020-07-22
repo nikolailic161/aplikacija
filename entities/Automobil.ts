@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
 import { Artikl } from "./Artikl";
 
 @Entity("automobil", { schema: "auto_delovi" })
@@ -12,6 +12,11 @@ export class Automobil {
   @Column("varchar", { name: "model", length: 25, default: () => "'0'" })
   model: string;
 
-  @ManyToMany(() => Artikl, (artikl) => artikl.automobils)
+  @ManyToMany(type=>Artikl,artikl=>artikl.automobils)
+  @JoinTable({
+    name:"artikl_automobil",
+    joinColumn: {name:"automobil", referencedColumnName: "autoId"},
+    inverseJoinColumn: {name: "artikl", referencedColumnName: "artiklId"}
+  })
   artikls: Artikl[];
 }
