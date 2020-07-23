@@ -19,6 +19,12 @@ import { KorisnikService } from './services/korisnik/korisnik.service';
 import { KorisnikController } from './controllers/api/korisnik.controller';
 import { AutomobilController } from './controllers/api/automobil.controller';
 import { AutomobilService } from './services/automobil/automobil.service';
+import { KorpaController } from './controllers/api/korpa.controller';
+import { KorpaService } from './services/korpa/korpa.service';
+import { NarudzbenicaController } from './controllers/api/narudzbenica.controller';
+import { NarudzbenicaService } from './services/narudzbenica/narudzbenica.service';
+import { KorpaStavkaController } from './controllers/api/korpaStavka.controller';
+import { KorpaStavkaService } from './services/korpaStavka/korpaStavka.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -30,10 +36,10 @@ import { AutomobilService } from './services/automobil/automobil.service';
       database: DataBaseConfiguration.database,
       entities: [Admin,Kategorija,Artikl,Automobil,Korpa,Korisnik,KorpaStavka,Narudzbenica]
     }),
-    TypeOrmModule.forFeature([Admin,Kategorija,Artikl,Korisnik,Automobil])
+    TypeOrmModule.forFeature([Admin,Kategorija,Artikl,Korisnik,Automobil,Korpa,Narudzbenica,KorpaStavka])
     
   ],
-  controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController],
-  providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService],
+  controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController,KorpaController,NarudzbenicaController,KorpaStavkaController],
+  providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService,KorpaService,NarudzbenicaService,KorpaStavkaService],
 })
 export class AppModule {}

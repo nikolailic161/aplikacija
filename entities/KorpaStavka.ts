@@ -9,9 +9,9 @@ import {
 import { Artikl } from "./Artikl";
 import { Korpa } from "./Korpa";
 
-@Index("artikl", ["artikl"], {})
+@Index("fk_korpa_stavka_artikl", ["artikl"], {})
 @Index("artikl_korpa", ["artikl", "korpa"], { unique: true })
-@Index("korpa", ["korpa"], {})
+@Index("fk_korpa_stavka_korpa", ["korpa"], {})
 @Entity("korpa_stavka", { schema: "auto_delovi" })
 export class KorpaStavka {
   @PrimaryGeneratedColumn({ type: "int", name: "stavka_id", unsigned: true })
