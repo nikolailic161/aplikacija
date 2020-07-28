@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Admin } from 'entities/Admin';
+import { Admin } from 'src/entities/Admin';
 import { Repository } from 'typeorm';
 import { AddAdminDto } from 'src/dtos/admin/add.admin.dto';
 import { EditAdminDto } from 'src/dtos/admin/edit.admin.dto';
@@ -70,5 +70,17 @@ export class AdminService
 
         return this.admin.save(editedAdmin);
 
+    }
+
+    async getByUsername(stringUsername:string):Promise<Admin | null>
+    {
+        const admin=await this.admin.findOne({
+            username: stringUsername
+        });
+
+        if(admin)
+            return admin;
+            
+        return null;
     }
 }

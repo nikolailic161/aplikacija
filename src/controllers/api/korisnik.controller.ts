@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
-import { Korisnik } from "entities/Korisnik";
+import { Korisnik } from "src/entities/Korisnik";
 import { KorisnikService } from "src/services/korisnik/korisnik.service";
 
 

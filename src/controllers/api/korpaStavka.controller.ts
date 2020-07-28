@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
-import { KorpaStavka } from "entities/KorpaStavka";
+import { KorpaStavka } from "src/entities/KorpaStavka";
 import { KorpaStavkaService } from "src/services/korpaStavka/korpaStavka.service";
 
 @Controller('api/korpaStavka')

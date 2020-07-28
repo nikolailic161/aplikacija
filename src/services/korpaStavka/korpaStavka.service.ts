@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
-import { KorpaStavka } from "entities/KorpaStavka";
+import { KorpaStavka } from "src/entities/KorpaStavka";
 import { InjectRepository } from "@nestjs/typeorm";
 import { KorpaService } from "../korpa/korpa.service";
 import { Repository } from "typeorm";

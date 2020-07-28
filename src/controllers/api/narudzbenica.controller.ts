@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
-import { Narudzbenica } from "entities/Narudzbenica";
+import { Narudzbenica } from "src/entities/Narudzbenica";
 import { NarudzbenicaService } from "src/services/narudzbenica/narudzbenica.service";
 
 @Controller('api/narudzbenica')

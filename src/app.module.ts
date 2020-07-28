@@ -1,18 +1,18 @@
-import { Module } from '@nestjs/common';
+import { Module,NestModule, MiddlewareConsumer } from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { DataBaseConfiguration } from 'config/database.configuration';
-import { Admin } from 'entities/Admin';
+import { Admin } from 'src/entities/Admin';
 import { AdminService } from './services/admin/admin.service';
 import { KategorijaService } from './services/kategorija/kategorija.service';
 import { AdminController } from './controllers/api/admin.controller';
-import { Kategorija } from 'entities/Kategorija';
+import { Kategorija } from 'src/entities/Kategorija';
 import { kategorijaKontroler } from './controllers/api/kategorija.controller';
-import { Artikl } from 'entities/Artikl';
-import { Automobil } from 'entities/Automobil';
-import { Korpa } from 'entities/Korpa';
-import { Korisnik } from 'entities/Korisnik';
-import { KorpaStavka } from 'entities/KorpaStavka';
-import { Narudzbenica } from 'entities/Narudzbenica';
+import { Artikl } from 'src/entities/Artikl';
+import { Automobil } from 'src/entities/Automobil';
+import { Korpa } from 'src/entities/Korpa';
+import { Korisnik } from 'src/entities/Korisnik';
+import { KorpaStavka } from 'src/entities/KorpaStavka';
+import { Narudzbenica } from 'src/entities/Narudzbenica';
 import { ArtiklService } from './services/artikl/artikl.service';
 import { ArtiklController } from './controllers/api/artikl.controller';
 import { KorisnikService } from './services/korisnik/korisnik.service';
@@ -25,6 +25,8 @@ import { NarudzbenicaController } from './controllers/api/narudzbenica.controlle
 import { NarudzbenicaService } from './services/narudzbenica/narudzbenica.service';
 import { KorpaStavkaController } from './controllers/api/korpaStavka.controller';
 import { KorpaStavkaService } from './services/korpaStavka/korpaStavka.service';
+import { AuthController } from './controllers/api/auth.controller';
+import { AuthMiddleware } from './middlewares/auth.middlewares';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -39,7 +41,14 @@ import { KorpaStavkaService } from './services/korpaStavka/korpaStavka.service';
     TypeOrmModule.forFeature([Admin,Kategorija,Artikl,Korisnik,Automobil,Korpa,Narudzbenica,KorpaStavka])
     
   ],
-  controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController,KorpaController,NarudzbenicaController,KorpaStavkaController],
+  controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController,KorpaController,NarudzbenicaController,KorpaStavkaController,AuthController],
   providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService,KorpaService,NarudzbenicaService,KorpaStavkaService],
+  exports: [AdminService]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware)
+      .exclude('auth/*')
+      .forRoutes('api/*');
+  }
+}

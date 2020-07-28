@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Automobil } from "entities/Automobil";
+import { Automobil } from "src/entities/Automobil";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { Repository } from "typeorm";

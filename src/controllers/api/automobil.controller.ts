@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
-import { Automobil } from "entities/Automobil";
+import { Automobil } from "src/entities/Automobil";
 import { AutomobilService } from "src/services/automobil/automobil.service";
 
 @Controller('api/automobil')
