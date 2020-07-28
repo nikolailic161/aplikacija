@@ -2,12 +2,13 @@ import { NestMiddleware, HttpException, HttpStatus, Inject, Injectable } from "@
 import { NextFunction,Request,Response } from "express";
 import { AdminService } from "src/services/admin/admin.service";
 import * as jwt from "jsonwebtoken";
-import { JwtDataAdminDto } from "src/dtos/admin/jwt.data.admin.dto";
+import { JwtDataDto } from "src/dtos/auth/jwt.data.dto";
 import { jwtSecret } from "config/jwt.secret";
+import { KorisnikService } from "src/services/korisnik/korisnik.service";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware{
-  constructor( private readonly adminService: AdminService){}
+  constructor( public adminService: AdminService, public korisnikService:KorisnikService){}
 
   async  use(req: Request, res: Response, next:NextFunction) {
      
@@ -17,7 +18,7 @@ export class AuthMiddleware implements NestMiddleware{
 
         const token =req.headers.authorization;
         
-        let jwtData: JwtDataAdminDto;
+        let jwtData: JwtDataDto;
         try{
         jwtData=jwt.verify(token,jwtSecret);
         }
@@ -38,10 +39,16 @@ export class AuthMiddleware implements NestMiddleware{
             throw new HttpException ('Bad token found', HttpStatus.UNAUTHORIZED);
         }
 
-        const admin = await this.adminService.getById(jwtData.adminId);
-        if (!admin){
-            throw new HttpException ('Account not found', HttpStatus.UNAUTHORIZED);
-
+        if (jwtData.role === "admin"){
+            const admin = await this.adminService.getById(jwtData.id);
+            if (!admin){
+                throw new HttpException ('Account not found', HttpStatus.UNAUTHORIZED);
+            }
+        }else if (jwtData.role==="korisnik"){
+            const korisnik = await this.korisnikService.getById(jwtData.id);
+            if (!korisnik){
+                throw new HttpException ('Account not found', HttpStatus.UNAUTHORIZED);
+            }
         }
 
         const trenutniTimestamp = new Date().getTime() / 1000;

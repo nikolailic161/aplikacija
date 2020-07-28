@@ -43,7 +43,7 @@ import { AuthMiddleware } from './middlewares/auth.middlewares';
   ],
   controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController,KorpaController,NarudzbenicaController,KorpaStavkaController,AuthController],
   providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService,KorpaService,NarudzbenicaService,KorpaStavkaService],
-  exports: [AdminService]
+  exports: [AdminService,KorisnikService]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
