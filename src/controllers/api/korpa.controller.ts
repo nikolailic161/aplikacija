@@ -25,9 +25,10 @@ import { KorpaService } from "src/services/korpa/korpa.service";
             },
             korpaStavkas:{
                 eager: true
-            },
+            }
         }
-    }
+    },
+   
 })
 export class KorpaController{
     constructor(public service:KorpaService){}
