@@ -17,6 +17,12 @@ export class KorpaStavka {
   @PrimaryGeneratedColumn({ type: "int", name: "stavka_id", unsigned: true })
   stavkaId: number;
 
+  @Column("int", { name: "korpa", unsigned: true})
+  korpaId: number;
+
+  @Column("int", { name: "artikl", unsigned: true})
+  artiklId: number;
+
   @Column("int", { name: "kolicina", unsigned: true, default: () => "'1'" })
   kolicina: number;
 
