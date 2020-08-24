@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
 import { Artikl } from "./Artikl";
+import * as Validator from 'class-validator';
 
 @Entity("automobil", { schema: "auto_delovi" })
 export class Automobil {
@@ -7,9 +8,13 @@ export class Automobil {
   autoId: number;
 
   @Column("varchar", { name: "marka", length: 25, default: () => "'0'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
   marka: string;
 
   @Column("varchar", { name: "model", length: 25, default: () => "'0'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
   model: string;
 
   @ManyToMany(type=>Artikl,artikl=>artikl.automobils)

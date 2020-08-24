@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Korpa } from "./Korpa";
+import * as Validator from 'class-validator';
 
 @Index("korpa_id", ["korpaId"], { unique: true })
 @Entity("narudzbenica", { schema: "auto_delovi" })
@@ -37,6 +38,9 @@ export class Narudzbenica {
     enum: ["odbijeno", "prihvaceno", "poslato", "na cekanju"],
     default: () => "'na cekanju'",
   })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
+  @Validator.IsIn(["odbijeno", "prihvaceno", "poslato", "na cekanju"])
   status: "odbijeno" | "prihvaceno" | "poslato" | "na cekanju";
 
   @OneToOne(() => Korpa, (korpa) => korpa.narudzbenica, {

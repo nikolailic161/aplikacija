@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Artikl } from "./Artikl";
 import { Korpa } from "./Korpa";
+import * as Validator from 'class-validator';
 
 @Index("fk_korpa_stavka_artikl", ["artikl"], {})
 @Index("artikl_korpa", ["artikl", "korpa"], { unique: true })
@@ -24,6 +25,14 @@ export class KorpaStavka {
   artiklId: number;
 
   @Column("int", { name: "kolicina", unsigned: true, default: () => "'1'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsPositive()
+  @Validator.IsNumber({
+    allowInfinity:false,
+    allowNaN:false,
+    maxDecimalPlaces:0
+  })
+  
   kolicina: number;
 
   @ManyToOne(() => Artikl, (artikl) => artikl.korpaStavkas, {

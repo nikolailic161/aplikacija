@@ -6,10 +6,13 @@ import { Korpa } from "src/entities/Korpa";
 import {Request} from 'express';
 import { AddArticleToCartDto } from "src/dtos/korpa/add.article.to.cart.dto";
 import { EditArticleInKorpaDto } from "src/dtos/korpa/edit.article.in.korpa.dto";
+import { Narudzbenica } from "src/entities/Narudzbenica";
+import { NarudzbenicaService } from "src/services/narudzbenica/narudzbenica.service";
+import { ApiResponse } from "src/misc/api.response.class";
 
 @Controller('api/korisnik/korpa')
 export class KorisnikKorpaController{
-    constructor (private korpaService: KorpaService){}
+    constructor (private korpaService: KorpaService,private narudzbenicaService : NarudzbenicaService){}
 
     private async getAktivnaKorpaZaKorisnika(korisnikId:number): Promise<Korpa>{
         let cart = await this.korpaService.getPoslednjaAktivnaKorpaByUserId(korisnikId);
@@ -42,5 +45,13 @@ export class KorisnikKorpaController{
     async promeniKolicinu(@Body()data:EditArticleInKorpaDto,@Req() req: Request):Promise<Korpa>{
         const korpa:Korpa=await this.getAktivnaKorpaZaKorisnika(req.token.id);
         return await this.korpaService.promenaKolicine(korpa.korpaId,data.artiklId,data.kolicina);
+    }
+
+    @Post('napraviPorudzbinu')
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles("korisnik")
+    async napraviPorudzbinu(@Req() req:Request): Promise <Narudzbenica | ApiResponse>{
+        const korpa:Korpa=await this.getAktivnaKorpaZaKorisnika(req.token.id);
+        return await this.narudzbenicaService.add(korpa.korpaId);
     }
 } 

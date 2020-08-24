@@ -8,6 +8,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Artikl } from "./Artikl";
+import * as Validator from 'class-validator';
+
 
 @Index("fk_kategorija_potkategorija", ["parent_kategorija"], {})
 @Index("ime", ["ime"], { unique: true })
@@ -26,6 +28,10 @@ export class Kategorija {
     length: 30,
     default: () => "'0'",
   })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
+  @Validator.Length(5,30)
+
   ime: string;
 
   @OneToMany(() => Artikl, (artikl) => artikl.kategorija)

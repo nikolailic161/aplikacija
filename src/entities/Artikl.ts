@@ -12,6 +12,8 @@ import {
 import { Automobil } from "./Automobil";
 import { Kategorija } from "./Kategorija";
 import { KorpaStavka } from "./KorpaStavka";
+import * as Validator from 'class-validator';
+
 
 @Index("fk_artikl_kategorija", ["kategorija"], {})
 @Entity("artikl", { schema: "auto_delovi" })
@@ -20,6 +22,9 @@ export class Artikl {
   artiklId: number;
 
   @Column("varchar", { name: "naziv", length: 30 })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
+  @Validator.Length(1,30)
   naziv: string;
 
   @Column("varchar", {
@@ -31,6 +36,8 @@ export class Artikl {
   slika: string | null;
 
   @Column("int", { name: "stanje", unsigned: true, default: () => "'1'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
   stanje: number;
 
   @Column("varchar", {
@@ -39,15 +46,20 @@ export class Artikl {
     length: 200,
     default: () => "'0'",
   })
+  
   opis: string | null;
 
   @Column("decimal", { name: "cena", precision: 10, scale: 0 })
   cena: string;
 
   @Column("varchar", { name: "fabricki", length: 3, default: () => "'Da'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
   fabricki: string;
 
   @Column("int", { name: "garancija", nullable: true, default: () => "'0'" })
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
   garancija: number | null;
 
   @ManyToMany(type=>Automobil,auto=>auto.artikls)

@@ -34,7 +34,9 @@ export class Korpa {
   @JoinColumn([{ name: "korisnik_id", referencedColumnName: "korisnikId" }])
   korisnik: Korisnik;
 
-  @OneToMany(() => KorpaStavka, (korpaStavka) => korpaStavka.korpa)
+  @OneToMany(
+    () => KorpaStavka,
+     korpaStavka => korpaStavka.korpa)
   korpaStavkas: KorpaStavka[];
 
   @OneToOne(() => Narudzbenica, (narudzbenica) => narudzbenica.korpa)
