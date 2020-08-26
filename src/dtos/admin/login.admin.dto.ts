@@ -8,6 +8,7 @@ export class LoginAdminDto{
     username:string;
     @Validator.IsNotEmpty()
     @Validator.IsString()
-    @Validator.Length(6,128)    password:string;       //nonHashPassword
+    @Validator.Length(6,128)   
+    password:string;       //nonHashPassword
 
 }

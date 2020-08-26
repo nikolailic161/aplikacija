@@ -27,11 +27,11 @@ export class KorpaStavka {
   @Column("int", { name: "kolicina", unsigned: true, default: () => "'1'" })
   @Validator.IsNotEmpty()
   @Validator.IsPositive()
-  @Validator.IsNumber({
+ /* @Validator.IsNumber({
     allowInfinity:false,
     allowNaN:false,
     maxDecimalPlaces:0
-  })
+ })*/
   
   kolicina: number;
 

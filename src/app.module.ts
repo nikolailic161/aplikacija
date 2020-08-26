@@ -28,6 +28,9 @@ import { KorpaStavkaService } from './services/korpaStavka/korpaStavka.service';
 import { AuthController } from './controllers/api/auth.controller';
 import { AuthMiddleware } from './middlewares/auth.middlewares';
 import { KorisnikKorpaController } from './controllers/api/korisnik.korpa.controller';
+import { MailerModule} from '@nestjs-modules/mailer';
+import { MailConfig } from 'config/mail.config';
+import { NarudzbinaMailer } from './services/narudzbenica/narudzbenica.mailer.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -39,11 +42,17 @@ import { KorisnikKorpaController } from './controllers/api/korisnik.korpa.contro
       database: DataBaseConfiguration.database,
       entities: [Admin,Kategorija,Artikl,Automobil,Korpa,Korisnik,KorpaStavka,Narudzbenica]
     }),
-    TypeOrmModule.forFeature([Admin,Kategorija,Artikl,Korisnik,Automobil,Korpa,Narudzbenica,KorpaStavka])
-    
+    TypeOrmModule.forFeature([Admin,Kategorija,Artikl,Korisnik,Automobil,Korpa,Narudzbenica,KorpaStavka]),
+    MailerModule.forRoot({
+      transport: 'smtps://' +MailConfig.username + ':' + MailConfig.password + ':' + MailConfig.hostname,
+      defaults: {
+        from: MailConfig.senderEmail,
+      },
+
+    })
   ],
   controllers: [AdminController,kategorijaKontroler,ArtiklController,KorisnikController,AutomobilController,KorpaController,NarudzbenicaController,KorpaStavkaController,AuthController,KorisnikKorpaController],
-  providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService,KorpaService,NarudzbenicaService,KorpaStavkaService],
+  providers: [AdminService,KategorijaService,ArtiklService,KorisnikService,AutomobilService,KorpaService,NarudzbenicaService,KorpaStavkaService,NarudzbinaMailer],
   exports: [AdminService,KorisnikService]
 })
 export class AppModule implements NestModule {
