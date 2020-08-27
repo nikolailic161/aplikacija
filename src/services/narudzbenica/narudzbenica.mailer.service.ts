@@ -7,15 +7,17 @@ import { KorpaStavka } from "src/entities/KorpaStavka";
 @Injectable()
 export class NarudzbinaMailer{
     constructor (private readonly mailerService:MailerService){}
-        
        async sendOrderEmail(narudzbina:Narudzbenica){
-            await this.mailerService.sendMail({
-                to:narudzbina.korpa.korisnik.email,
-                bcc:MailConfig.orderNotificationMail,
-                subject:'Detalji narudzbine',
-                encoding:'UTF-8',
-                html:this.makeOrderHtml(narudzbina),
-            });
+           console.log(narudzbina.korpa.korisnik.email);
+           console.log(this.makeOrderHtml(narudzbina));
+
+           await this.mailerService.sendMail({
+               to: narudzbina.korpa.korisnik.email,
+               bcc: MailConfig.orderNotificationMail,
+               subject: 'Detalji narudzbine',
+               encoding: 'UTF-8',
+               html: this.makeOrderHtml(narudzbina),
+           });
         
 
     }    

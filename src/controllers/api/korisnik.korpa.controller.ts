@@ -28,10 +28,11 @@ export class KorisnikKorpaController{
         return await this.korpaService.getById(cart.korpaId);
     }
 
-    @Get()
+    @Get('bla')
     @UseGuards(RoleCheckedGuard)
-    @AllowToRoles("korisnik")
+     @AllowToRoles("korisnik")
     async getTrenutnaKorpa(@Req() req:Request) : Promise<Korpa>{
+        console.log('bla bla');
         return await this.getAktivnaKorpaZaKorisnika(req.token.id);
     }
 
@@ -57,14 +58,13 @@ export class KorisnikKorpaController{
     async napraviPorudzbinu(@Req() req:Request): Promise <Narudzbenica | ApiResponse>{
         const korpa = await this.getAktivnaKorpaZaKorisnika(req.token.id);
         const narudzbenica = await this.narudzbenicaService.add(korpa.korpaId);
-    
         if (narudzbenica instanceof ApiResponse){
             return narudzbenica;
         }
 
 
-    await this.narudzbinaMailer.sendOrderEmail(narudzbenica);
-            return narudzbenica;
+         await this.narudzbinaMailer.sendOrderEmail(narudzbenica);
+           return narudzbenica;
     }
 
 } 

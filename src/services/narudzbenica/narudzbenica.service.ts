@@ -45,7 +45,11 @@ export class NarudzbenicaService{
         newNarudzbina.korpaId=korpaId;
         const savedNarudzbina = await this.narudzbenica.save(newNarudzbina);
         
-        return await this.narudzbenica.findOne(savedNarudzbina.narudzbenicaId,{
+       return await this.getById(savedNarudzbina.narudzbenicaId);
+
+    }
+    async getById(narudzbenicaId: number){
+        return await this.narudzbenica.findOne(narudzbenicaId,{
             relations:[
                 "korpa",
                 "korpa.korisnik",
@@ -53,8 +57,19 @@ export class NarudzbenicaService{
                 "korpa.korpaStavkas.artikl",
                 "korpa.korpaStavkas.artikl.kategorija"
             ],
-
         });
+ }
 
-    }
+        async changeStatus (narudzbenicaId:number,newStatus: "odbijeno" | "prihvaceno" | "poslato" | "na cekanju"){
+            const narudzbenica = await this.getById(narudzbenicaId);
+
+            if(!narudzbenica){
+                return new ApiResponse ("error",-9002 ,"Ne posotoji")
+            }
+            narudzbenica.status=newStatus;
+            await this.narudzbenica.save(narudzbenica);
+            return await this.getById(narudzbenicaId);
+
+        }
+
 }
