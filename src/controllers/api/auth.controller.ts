@@ -11,9 +11,9 @@ import { JwtDataDto } from "src/dtos/auth/jwt.data.dto";
 import {Request} from 'express';
 import { jwtSecret } from "config/jwt.secret";
 import { KorisnikRegistrationDto } from "src/dtos/korisnik/korisnik.registration.dto";
-import { KorisnikService } from "src/services/korisnik/korisnik.service";
 import { Korisnik } from "src/entities/Korisnik";
 import { LoginKorisnikDto } from "src/dtos/korisnik/login.korisnik.dto";
+import { KorisnikService } from "src/services/korisnik/korisnik.service";
 
 @Controller('auth')
 export class AuthController{
@@ -65,8 +65,9 @@ export class AuthController{
 
     }
 
-    @Put('user/register')
+    @Post('user/register')
     async userRegister(@Body() data: KorisnikRegistrationDto){
+        console.log(data);
         return await this.korisnikService.register(data);
     }
 
@@ -115,4 +116,6 @@ export class AuthController{
         return new Promise (resolve => resolve (responseObject));
 
     }
+
+    
 }

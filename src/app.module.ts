@@ -31,6 +31,7 @@ import { KorisnikKorpaController } from './controllers/api/korisnik.korpa.contro
 import { MailerModule} from '@nestjs-modules/mailer';
 import { MailConfig } from 'config/mail.config';
 import { NarudzbinaMailer } from './services/narudzbenica/narudzbenica.mailer.service';
+import { UserToken } from './entities/Korisnik-token';
 @Module({
   imports: [
     TypeOrmModule.forRoot({

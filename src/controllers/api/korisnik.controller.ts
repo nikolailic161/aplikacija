@@ -4,6 +4,7 @@ import { Korisnik } from "src/entities/Korisnik";
 import { KorisnikService } from "src/services/korisnik/korisnik.service";
 
 
+
 @Controller('api/korisnik')
 @Crud({
     model:{
